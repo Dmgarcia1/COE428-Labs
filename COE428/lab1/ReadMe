@@ -1,0 +1,7 @@
+David Garcia 501258133
+Section 20
+Problem 1 sorts properly.
+Problem 2 sorts properly with the command line inputs and sorts the default array without the command line inputs.
+
+1. You could call the betterSort function from the mySort function, using it for larger arrays that you may want to split up into sections via the first and last parameters, whereas the simple mySort could be used for smaller arrays that aren't as difficult to sort. You could use and if statement checking for a size large than a certain amount eg if size >10, then use the betterSort and imply the section of the array that must be sorted. It can also be used in any case where you would only want a section of the array sorted rather than the whole thing, even if the array is smaller for whatever reason. 
+

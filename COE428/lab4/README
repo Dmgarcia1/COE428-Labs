@@ -1,0 +1,19 @@
+Hello 
+
+Your personalized state machine description for Lab 4 (coe 428) follows:
+
+s 0 1
+A G H
+B C F
+C E G
+D B E
+E A B
+F H C
+G F A
+H D H
+
+Your starting state is: E 
+
+Note: DO NOT SPLIT THE COMMANDS WITH SPACES. e.g. write c1A or dB e.t.c. for all multi command functions.
+
+Aside from the spacing not being proper the program runs and all the methods worked.

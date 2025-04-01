@@ -1,0 +1,14 @@
+All code compiled correctly. For part II method worked when passing either 0, 1 or 3 arguments to command line when calling towers.
+
+
+Tutorial I Questions:
+
+1) After towers(5,2,3) is invoked, since n is not zero the first recursive call will be towers(n-1, from, spare), where spare = 6-from-dest, in this case spare = 6-2-3 = 1, so the recursive call will be towers(4,2,1), since n is also reduced.
+
+2) The function will make 5 recursive calls due to each recursive call being n-1 where n starts at 5, it will call at n=4,3,2,1,0 and then stop at n=0 due to the if statement only calling the recursion if n!=0 after this it will print the move.
+
+3) The value that will be printed out will be moved from tower 2 to tower 3 since the print statement at the end uses the values of from and dest, from's value remains unchanged in the function because that is the tower which the disks are coming from. dest's value will alternate between the two towers that are not the from tower. This is because there are two recursive calls in the function, one which inputs spare and one which inputs dest, so dest and spare are called in alternation with each other as the values swap with each recursive call, on even values of n the final output will be the initial value of spare, and on odd n values it will be the initial value of dest.
+
+4) After towers(4,2,1), n will be decremented once again and the new call will be towers(n-1,from,spare), where spare has changed since it was initially passed as dest while the new spare value was calculated. Hence, the next call would be towers(3,2,3).
+
+5) The general formula to determine the number of required moves in towers of Hanoi is 2^n-1, where n is the number of disks, supposing that 8 disks are used, there would be a total of 255 moves before the program finished. When the program is ran, it also stops at move #255.

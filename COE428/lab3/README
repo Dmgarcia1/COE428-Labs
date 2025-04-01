@@ -1,0 +1,18 @@
+Time complexity for insertion sort: Best Case: Array is already Sorted so O(n) where n is the input size
+Average Case + Worst Case: the method has a nested loop. In big O notation every loop is executed n times. So when a loop is nested, it multiplies making the time complexity O(n^2). each element is compared with all the elements before it, creating a total of (n*(n-1))/2 comparisons in the worst case. Average case is slightly faster because there are less total comparisons but time complexity is the same because it must still run through both loops to sort the array.
+
+Using an array of size 5:
+
+Best Case: 4 comparisons, 0 swaps, 5 copies
+Average Case:7 comp, 3 swap, 5 copy
+Worst Case: 10 comp, 10 swap, 5 copy
+
+Used command insertionSort <data2.txt
+
+Time complexity for Merge Sort: The merge sort uses recursion, which has a time complexity of log(n), since each call divides the array into two halves. Then the separated while loops each have a time complexity of O(n), resulting in a total time complexity of logn*(n + n + n) = O(nlogn). The time complexity is the same in all cases because it runs both the recursion and while loops regardless of how well sorted the array is previously.
+
+Best Case: 4 comp, 8 swaps, 4 copies
+Average Case: 5 comp, 8 swap, 3 copy
+Worst Case: 4 comp, 8 swap, 4 copy
+
+Used command mergeSort <data2.txt
