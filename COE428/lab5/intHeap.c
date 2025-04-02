@@ -120,7 +120,3 @@ void printHeapXML(MaxHeap *h){
 }
 
 
-
-
-
-}
