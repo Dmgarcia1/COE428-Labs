@@ -26,6 +26,8 @@
 //  RECOMMENDATION:
 //   Uncomment the following 2 lines and use these static globals!
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 static int top = -1;
 static char * stack[100];
 
@@ -39,11 +41,12 @@ static char * stack[100];
 char *  pop()
 {
 	if(top == -1){
-		printf("Stack is empty");
+		fprintf(stderr, "Stack is empty");
 		return (char *) 0;
 	}
 	
 	char* value = stack[top];
+	stack[top] = NULL; // Clear the pointer to avoid dangling reference
 	top--;
 	printf("Popped: %s\n", value);
 	return value;
@@ -58,12 +61,19 @@ char *  pop()
 void push(char * thing2push)
 {
 	if(top >= 100-1){
-		printf("Stack Overflow");
+		fprintf(stderr, "Stack Overflow");
 		return;
 	}
 	top++;
-	stack[top]= thing2push;
-	printf("Pushed: %s\n", thing2push);
+	stack[top]= strdup(thing2push);
+	if (stack[top] == NULL){
+		fprintf(stderr, "Memory allocation failed");
+		top--;
+	}
+	else{
+		printf("Pushed: %s\n", thing2push);
+	}
+	
 }
 
 /**
@@ -73,8 +83,5 @@ void push(char * thing2push)
  */
 int isEmpty()
 {
-	if (sizeof(stack) == 0){
-		return top == -1;
-	}
- 	return 0;  
+	return top == -1;
 }

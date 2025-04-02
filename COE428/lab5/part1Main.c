@@ -67,9 +67,11 @@ int main(int argc, char * argv[]) {
                 char* popped_tag = pop();
                 if (strcmp(popped_tag, tag) != 0) {
                     // Print the tag mismatch error
-                    printf("Error: Tag mismatch, expected '%s' but found '%s'\n", popped_tag, tag);
+                    fprintf(stderr, "Error: Tag mismatch, expected '%s' but found '%s'\n", popped_tag, tag);
+                    free(popped_tag);  // Free the popped tag memory
                     return 1;
                 }
+                free(popped_tag);  
             }
         }
     }
