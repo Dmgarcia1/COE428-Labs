@@ -9,114 +9,99 @@
  *
  */
 #include <stdio.h>
-extern int pop2();
-extern void push2(int);
-extern int isEmpty2();
+#include <stdlib.h>
+#include "heap.h"
 
-#define MAX_HEAP_SIZE 100
 
-// Define a Max-Heap structure
-typedef struct {
-    int heap[MAX_HEAP_SIZE];
-    int size;
-} MaxHeap;
+// Add an element to the heap
+void addHeap(int *heap, int value)
+{
+    int index = heap[0] + 1; // heap[0] stores the size of the heap
+    heap[index] = value;     // Add the value to the next available position
+    heap[0] = index;         // Update the size of the heap
 
-// Initialize the heap
-void initHeap(MaxHeap* h) {
-    h->size = 0;
+    // Bubble up to maintain the max-heap property
+    int current = index;
+    while (current > 1 && heap[current] > heap[current / 2]) {
+        // Swap with the parent
+        int temp = heap[current];
+        heap[current] = heap[current / 2];
+        heap[current / 2] = temp;
+
+        current /= 2;
+    }
 }
 
-void swap(int* a, int* b){
-	int temp = *a;
-	*a = *b;
-	*b = temp;
-	
-}
-void max_heapify(MaxHeap *h, int index){
-	int left = 2 * index + 1;  // Left child index
-    int right = 2 * index + 2; // Right child index
-    int largest = index;
+// Max-heapify a subtree rooted at index `i`
+void max_heapify(int *heap, int i) {
+    int size = heap[0]; // heap[0] stores the size of the heap
+    int largest = i;
+    int left = 2 * i;
+    int right = 2 * i + 1;
 
-	// If left child is larger than root
-    if (left < h->size && h->heap[left] > h->heap[largest]) {
+    if (left <= size && heap[left] > heap[largest]) {
         largest = left;
     }
-
-    // If right child is larger than the largest so far
-    if (right < h->size && h->heap[right] > h->heap[largest]) {
+    if (right <= size && heap[right] > heap[largest]) {
         largest = right;
     }
 
-    // If the largest is not root, swap and heapify the affected subtree
-    if (largest != index) {
-        swap(&h->heap[index], &h->heap[largest]);
-        max_heapify(h, largest);
+    if (largest != i) {
+        // Swap and recursively heapify
+        int temp = heap[i];
+        heap[i] = heap[largest];
+        heap[largest] = temp;
+
+        max_heapify(heap, largest);
     }
 }
+void printNode(int *heap, int index) {
+    if (index > heap[0]) return;
 
-int heapDelete(MaxHeap*h)
-{
-    if (h->size <= 0) {
-       printf("Heap is empty!\n");
-       return -1; // Return -1 if the heap is empty
-    }
-
-    // Get the root element (max element) and place into stack
-    int root = h->heap[0];
-	pop();
-	printf("%d", h->heap[h->size]);
-
-    // Move the last element to the root
-    h->heap[0] = h->heap[h->size - 1];
-    h->size--;
-
-    // Max-heapify the root element to restore the heap property
-    max_heapify(h, 0);
-
-    return root;
+    printf("<node id=\"%d\">", heap[index]);
+    printNode(heap, 2 * index);     // Left child
+    printNode(heap, 2 * index + 1); // Right child
+    printf("</node>");
 }
+// Print the heap as XML
+void printHeapXML(int *heap) {
 
-/**
- *  addHeap(thing2add) adds the "thing2add" to the Heap.
- *
- */
-void addHeap(MaxHeap*h, int thing2add)
-{
-	if (h->size >= MAX_HEAP_SIZE) {
-        printf("Heap is full!\n");
+    if (heap[0] == 0) {
+        printf("<heap></heap>\n"); // Empty heap
         return;
     }
-    // Insert the new element at the end of the heap
-    int index = h->size++;
-    h->heap[index] = thing2add;
-	push(thing2add);
 
-    // Bubble up the new element to restore the heap property
-    while (index > 0 && h->heap[(index - 1) / 2] < h->heap[index]) {
-        swap(&h->heap[index], &h->heap[(index - 1) / 2]);
-        index = (index - 1) / 2;
+    printf("<node id=\"%d\">", heap[1]); // Root node
+    printNode(heap, 2);                 // Left child
+    printNode(heap, 3);                 // Right child
+    printf("</node>\n");
+}
+
+// Delete the root (maximum value) from the heap
+int heapDelete(int *heap, int *size) {
+    if (*size == 0) {
+        fprintf(stderr, "Heap underflow\n");
+        return -1;
     }
+
+    int maxValue = heap[1]; // Root value
+    heap[1] = heap[*size];  // Move the last element to the root
+    (*size)--;              // Decrease the size of the heap
+    heap[0] = *size;        // Update the size in heap[0]
+
+    // Restore the max-heap property
+    max_heapify(heap, 1);
+
+    return maxValue;
 }
 
 /**
  * heapSize() returns the number of items in the Heap.
  *
  */
-//heap size is 
-int heapSize(MaxHeap*h)
+
+int heapSize(int*heap)
 {
-	return h->size;
+	return heap[0];
 }
-
-void printHeapXML(MaxHeap *h){
-	
-	printf("<heap>\n");
-
-	for(int i=0; i< h->size; i++){
-		
-		printf("<node id=\"%d\"></node>\n", h->heap[i]);
-	}
-
-}
-
 

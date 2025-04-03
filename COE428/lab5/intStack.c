@@ -27,6 +27,8 @@
 //  RECOMMENDATION:
 //   Uncomment the following 2 lines and use these static globals!
 #include <stdio.h>
+#include <stdlib.h>
+#include "intStack.h"
 static int top = 0;
 static int stack[100];
 
@@ -40,15 +42,12 @@ static int stack[100];
 
 int pop2()
 {
-	if(top == -1){
-		printf("Stack is empty");
-		return 0;
+	if(isEmpty2()){
+		fprintf(stderr, "Stack is empty\n");
+		return -1;
 	}
-	
-	int value = stack[top];
 	top--;
-	printf("Popped: %d\n", value);
-	return value;
+	return stack[top];
 }
 
 /**
@@ -60,12 +59,14 @@ int pop2()
 void push2(int thing2push)
 {
 	if(top >= 100-1){
-		printf("Stack Overflow");
+		fprintf(stderr, "Stack Overflow");
 		return;
 	}
-	top++;
+	
 	stack[top]= thing2push;
-	printf("Pushed: %d\n", thing2push);
+	top++;
+
+	printf("Pushed: %d\n", thing2push);	
 }
 
 /**
@@ -75,15 +76,12 @@ void push2(int thing2push)
  */
 int isEmpty2()
 {
-	if (sizeof(stack) == 0){
-		return top == -1;
-	}
- 	return 0;  
+		return top == 0;
 }
 
-void print(){
+void printStack(){
 	for(int i=0; i<=top; i++){
-		printf(stack[i]);
+		printf("%d", stack[i]);
 	}
 }
 
