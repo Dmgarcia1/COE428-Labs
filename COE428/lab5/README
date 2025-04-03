@@ -1,0 +1,7 @@
+Code is working as intdended for part 1 and part 2
+
+Q:Another legal XML tag not used in this lab is the "stand-alone" tag. This kind of tag combines both a start-tag and end-tag in one. It is identified with a '/' (slash) preceding the final >. (For example, the <foo/> is a stand-alone tag that is "self balancing").
+
+Describe briefly how you would modify Requirement 1 to allow this kind of tag.
+
+To allow this tag in requirement 1 you would need to change the logic that reads through the inputs to recognize if there was a stand-alone tag. This would involve checking if there is a forward slash "/" before the close ">", and then identifying that as a valid self balanced tag. Then this tag would be handled seperately from the rest, where it would not be pushed or popped from the stack, instead they would be output as independent elements without needing to be paired. Then it could be output in a way that displays either <foo></foo> or <foo/>.
